@@ -1,0 +1,11 @@
+{
+  "name": "@myscope/java-ls-config-win32",
+  "version": "0.1.0",
+  "description": "Platform configuration for @myscope/java-language-server (Windows)",
+  "license": "EPL-2.0",
+  "os": ["win32"],
+  "files": [
+    "config_win",
+    "README.md"
+  ]
+}

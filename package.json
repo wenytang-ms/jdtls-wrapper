@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "java-language-server-monorepo",
+  "version": "0.1.0",
+  "description": "Monorepo for Java Language Server npm packages",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "node scripts/lint.js",
+    "publish-all": "node scripts/publish.js",
+    "download-jdtls": "node scripts/download-jdtls.js"
+  }
+}

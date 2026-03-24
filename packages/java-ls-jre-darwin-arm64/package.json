@@ -1,0 +1,12 @@
+{
+  "name": "@myscope/java-ls-jre-darwin-arm64",
+  "version": "0.1.0",
+  "description": "Bundled Java 21 JRE for @myscope/java-language-server (macOS ARM64)",
+  "license": "GPL-2.0-with-classpath-exception",
+  "os": ["darwin"],
+  "cpu": ["arm64"],
+  "files": [
+    "jre",
+    "README.md"
+  ]
+}

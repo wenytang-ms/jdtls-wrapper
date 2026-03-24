@@ -1,0 +1,24 @@
+{
+  "repositoryPath": "/path/to/your/java/project",
+  "java": {
+    "home": null,
+    "vmargs": ["-Xmx2G", "-XX:+UseG1GC"]
+  },
+  "project": {
+    "type": "auto",
+    "importOnStartup": true,
+    "referencedLibraries": ["lib/**/*.jar"]
+  },
+  "workspace": {
+    "dataDir": null
+  },
+  "maven": {
+    "userSettings": null,
+    "globalSettings": null
+  },
+  "gradle": {
+    "wrapper": true,
+    "version": null,
+    "home": null
+  }
+}

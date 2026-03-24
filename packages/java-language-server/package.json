@@ -1,0 +1,34 @@
+{
+  "name": "@myscope/java-language-server",
+  "version": "0.1.0",
+  "description": "Java Language Server (Eclipse JDT LS) for Copilot CLI",
+  "license": "EPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myscope/java-language-server"
+  },
+  "main": "lib/install.js",
+  "bin": {
+    "jdtls": "bin/jdtls.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "server",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node lib/postinstall.js"
+  },
+  "optionalDependencies": {
+    "@myscope/java-ls-config-win32": "0.1.0",
+    "@myscope/java-ls-config-linux": "0.1.0",
+    "@myscope/java-ls-config-darwin": "0.1.0",
+    "@myscope/java-ls-jre-win32-x64": "0.1.0",
+    "@myscope/java-ls-jre-linux-x64": "0.1.0",
+    "@myscope/java-ls-jre-darwin-arm64": "0.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

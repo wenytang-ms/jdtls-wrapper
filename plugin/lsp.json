@@ -1,0 +1,43 @@
+{
+  "lspServers": {
+    "java": {
+      "command": "npx",
+      "args": [
+        "@myscope/java-language-server",
+        "--stdio"
+      ],
+      "fileExtensions": {
+        ".java": "java"
+      },
+      "initializationOptions": {
+        "settings": {
+          "java": {
+            "import": {
+              "maven": { "enabled": true },
+              "gradle": { "enabled": true, "wrapper": { "enabled": true } }
+            },
+            "autobuild": { "enabled": true },
+            "configuration": {
+              "updateBuildConfiguration": "automatic"
+            },
+            "implementationsCodeLens": { "enabled": false },
+            "referencesCodeLens": { "enabled": false },
+            "signatureHelp": { "enabled": true }
+          }
+        },
+        "extendedClientCapabilities": {
+          "classFileContentsSupport": true,
+          "progressReportProvider": false,
+          "overrideMethodsPromptSupport": false,
+          "hashCodeEqualsPromptSupport": false,
+          "advancedOrganizeImportsSupport": false,
+          "generateToStringPromptSupport": false,
+          "advancedGenerateAccessorsSupport": false,
+          "advancedExtractRefactoringSupport": false,
+          "resolveAdditionalTextEditsSupport": true
+        }
+      },
+      "requestTimeoutMs": 300000
+    }
+  }
+}

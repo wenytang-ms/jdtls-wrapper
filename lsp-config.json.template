@@ -1,0 +1,11 @@
+{
+  "lspServers": {
+    "java": {
+      "command": "jdtls",
+      "args": ["--stdio"],
+      "fileExtensions": {
+        ".java": "java"
+      }
+    }
+  }
+}

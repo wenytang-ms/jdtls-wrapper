@@ -1,0 +1,11 @@
+{
+  "name": "@myscope/java-ls-config-darwin",
+  "version": "0.1.0",
+  "description": "Platform configuration for @myscope/java-language-server (macOS)",
+  "license": "EPL-2.0",
+  "os": ["darwin"],
+  "files": [
+    "config_mac",
+    "README.md"
+  ]
+}
