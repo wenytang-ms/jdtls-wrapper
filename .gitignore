@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Downloaded JDTLS artifacts (restored via `npm run download-jdtls`)
+packages/java-language-server/server/plugins/
+packages/java-language-server/server/features/
+packages/java-language-server/server/lombok.jar
+
+# Platform configs (distributed by download script)
+packages/java-ls-config-win32/config_win/
+packages/java-ls-config-linux/config_linux/
+packages/java-ls-config-darwin/config_mac/
+
+# Bundled JRE binaries
+packages/java-ls-jre-win32-x64/jre/
+packages/java-ls-jre-linux-x64/jre/
+packages/java-ls-jre-darwin-arm64/jre/
+
+# Temp download directory
+.tmp/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.idea/
+*.swp
+*.swo
+
+# Test & coverage output
+coverage/
+.nyc_output/
+
+# Eclipse workspace metadata
+packages/java-ls-config-win32/config_win/**/org.eclipse.osgi/
