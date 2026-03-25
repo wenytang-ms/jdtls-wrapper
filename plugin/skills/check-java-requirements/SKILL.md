@@ -5,7 +5,7 @@ description: Checks Java runtime and jdtls server availability. Helps diagnose i
 
 ## Check
 
-Run: `npx --yes @myscope/java-language-server --version`
+Run: `npx --yes @msinternal/java-language-server --version`
 
 - If a version number is printed, the package is accessible. Proceed to check Java.
 - If it fails with a registry error, the npm package is not accessible.
@@ -29,21 +29,21 @@ Install Java 21+:
 
 Or install the bundled JRE package:
 ```
-npm install -g @myscope/java-ls-jre-win32-x64    # Windows
-npm install -g @myscope/java-ls-jre-linux-x64     # Linux
-npm install -g @myscope/java-ls-jre-darwin-arm64   # macOS ARM
+npm install -g @msinternal/java-ls-jre-win32-x64    # Windows
+npm install -g @msinternal/java-ls-jre-linux-x64     # Linux
+npm install -g @msinternal/java-ls-jre-darwin-arm64   # macOS ARM
 ```
 
 ### 2. jdtls Server Files Missing
 
-If `npx @myscope/java-language-server --stdio` fails with "launcher jar not found":
+If `npx @msinternal/java-language-server --stdio` fails with "launcher jar not found":
 
 ```bash
 # Download jdtls server files
-cd $(npm root -g)/@myscope/java-language-server
+cd $(npm root -g)/@msinternal/java-language-server
 node ../../scripts/download-jdtls.js
 ```
 
 ### 3. Re-verify
 
-Run `npx --yes @myscope/java-language-server --version` again to confirm the fix worked.
+Run `npx --yes @msinternal/java-language-server --version` again to confirm the fix worked.

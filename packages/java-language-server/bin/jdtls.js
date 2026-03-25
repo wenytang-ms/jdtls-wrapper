@@ -33,7 +33,7 @@ function buildArgs(config) {
   if (!javaExe) {
     console.error('ERROR: Java 21+ runtime not found.');
     console.error('Install Java 21+ and set JAVA_HOME, or install the optional JRE package:');
-    console.error(`  npm install @myscope/java-ls-jre-${process.platform}-${process.arch}`);
+    console.error(`  npm install @msinternal/java-ls-jre-${process.platform}-${process.arch}`);
     process.exit(1);
   }
 

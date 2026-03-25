@@ -1,0 +1,48 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 0.1.0). Leave empty to use current version in package.json.'
+        required: false
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Download JDTLS
+        run: node scripts/download-jdtls.js
+
+      - name: Update version (if specified)
+        if: ${{ inputs.version != '' }}
+        run: |
+          for pkg in packages/*/package.json; do
+            node -e "
+              const fs = require('fs');
+              const p = JSON.parse(fs.readFileSync('$pkg', 'utf8'));
+              p.version = '${{ inputs.version }}';
+              if (p.optionalDependencies) {
+                for (const k of Object.keys(p.optionalDependencies)) {
+                  p.optionalDependencies[k] = '${{ inputs.version }}';
+                }
+              }
+              fs.writeFileSync('$pkg', JSON.stringify(p, null, 2) + '\n');
+            "
+            echo "Updated $pkg to version ${{ inputs.version }}"
+          done
+
+      - name: Publish all packages
+        run: node scripts/publish.js --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PATH_TOKEN }}

@@ -17,7 +17,7 @@ Distributes [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclip
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  @myscope/java-language-server          (main package)           │
+│  @msinternal/java-language-server          (main package)           │
 │  ├── bin/jdtls.js          Entry point: find JVM → spawn jdtls  │
 │  ├── lib/install.js        Platform detection, JVM resolution   │
 │  ├── lib/detect.js         Maven / Gradle project detection     │
@@ -91,9 +91,9 @@ This project follows the same plugin architecture as `@msinternal/cpp-language-s
 ```
 npm registry                          Copilot CLI
 ┌─────────────────────┐    npx      ┌────────────────────────────┐
-│ @myscope/            │◄──────────│ plugin/lsp.json             │
+│ @msinternal/            │◄──────────│ plugin/lsp.json             │
 │  java-language-server│            │  "command": "npx",          │
-│  java-ls-config-*    │            │  "args": ["@myscope/..."]   │
+│  java-ls-config-*    │            │  "args": ["@msinternal/..."]   │
 │  java-ls-jre-*       │            └──────────┬─────────────────┘
 └─────────────────────┘                        │ loaded via
                                     ┌──────────┴─────────────────┐
@@ -167,9 +167,9 @@ Copilot CLI encounters .java file
   │
   ├─ Reads ~/.copilot/installed-plugins/local/java-language-server/
   │   └─ .claude-plugin/plugin.json → "lspServers": "lsp.json"
-  │       └─ lsp.json → { "command": "npx", "args": ["@myscope/java-language-server", "--stdio"] }
+  │       └─ lsp.json → { "command": "npx", "args": ["@msinternal/java-language-server", "--stdio"] }
   │
-  ├─ Executes: npx @myscope/java-language-server --stdio
+  ├─ Executes: npx @msinternal/java-language-server --stdio
   │
   ├─ bin/jdtls.js
   │   ├─ loadConfig()         Read java-lsp.json if present (optional, walk up from cwd)

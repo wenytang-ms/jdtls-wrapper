@@ -3,7 +3,7 @@
     "java": {
       "command": "npx",
       "args": [
-        "@myscope/java-language-server",
+        "@msinternal/java-language-server",
         "--stdio"
       ],
       "fileExtensions": {

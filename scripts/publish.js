@@ -20,7 +20,9 @@ const PUBLISH_ORDER = [
   'java-ls-config-darwin',
   'java-ls-jre-win32-x64',
   'java-ls-jre-linux-x64',
+  'java-ls-jre-linux-arm64',
   'java-ls-jre-darwin-arm64',
+  'java-ls-jre-darwin-x64',
   'java-language-server',   // Must be last
 ];
 

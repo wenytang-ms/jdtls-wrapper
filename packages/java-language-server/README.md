@@ -1,4 +1,4 @@
-# @myscope/java-language-server
+# @msinternal/java-language-server
 
 Java Language Server (Eclipse JDT LS wrapper) distributed via npm, designed for integration with GitHub Copilot CLI.
 
@@ -9,14 +9,14 @@ This package wraps [Eclipse JDT Language Server](https://github.com/eclipse-jdtl
 ## Installation
 
 ```bash
-npm install -g @myscope/java-language-server
+npm install -g @msinternal/java-language-server
 ```
 
 The installation automatically downloads the correct platform configuration for your OS.
 To bundle a JRE (no separate Java install needed):
 
 ```bash
-npm install -g @myscope/java-language-server @myscope/java-ls-jre-win32-x64
+npm install -g @msinternal/java-language-server @msinternal/java-ls-jre-win32-x64
 ```
 
 ## Prerequisites
@@ -70,7 +70,7 @@ Create `java-lsp.json` in your project root:
 
 ## Java Runtime Resolution Order
 
-1. Bundled JRE (optional `@myscope/java-ls-jre-*` package)
+1. Bundled JRE (optional `@msinternal/java-ls-jre-*` package)
 2. `java.home` in `java-lsp.json`
 3. `JAVA_HOME` environment variable
 4. `java` on system PATH
@@ -78,14 +78,14 @@ Create `java-lsp.json` in your project root:
 ## Architecture
 
 ```
-@myscope/java-language-server          (main package - Node.js shell + shared JARs)
+@msinternal/java-language-server          (main package - Node.js shell + shared JARs)
 ├── bin/jdtls.js                       (entry point)
 ├── lib/install.js                     (platform detection, JVM resolution)
 ├── lib/detect.js                      (Maven/Gradle project detection)
 ├── server/plugins/                    (Eclipse JDT LS jars - cross-platform)
 └── optionalDependencies:
-    ├── @myscope/java-ls-config-*      (platform-specific launcher config)
-    └── @myscope/java-ls-jre-*         (optional bundled JRE)
+    ├── @msinternal/java-ls-config-*      (platform-specific launcher config)
+    └── @msinternal/java-ls-jre-*         (optional bundled JRE)
 ```
 
 ## Server Files
@@ -94,7 +94,7 @@ After installing, place the jdtls server files in `server/`:
 
 ```bash
 # Download jdtls
-curl -L https://download.eclipse.org/jdtls/milestones/1.40.0/jdt-language-server-1.40.0-202410311350.tar.gz | tar xz -C node_modules/@myscope/java-language-server/server/
+curl -L https://download.eclipse.org/jdtls/milestones/1.40.0/jdt-language-server-1.40.0-202410311350.tar.gz | tar xz -C node_modules/@msinternal/java-language-server/server/
 ```
 
 ## License

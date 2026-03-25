@@ -1,12 +1,15 @@
 {
-  "name": "@myscope/java-ls-jre-win32-x64",
+  "name": "@msinternal/java-ls-jre-win32-x64",
   "version": "0.1.0",
-  "description": "Bundled Java 21 JRE for @myscope/java-language-server (Windows x64)",
+  "description": "Bundled Java 21 JRE for @msinternal/java-language-server (Windows x64)",
   "license": "GPL-2.0-with-classpath-exception",
   "os": ["win32"],
   "cpu": ["x64"],
   "files": [
     "jre",
     "README.md"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }

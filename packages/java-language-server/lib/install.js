@@ -10,9 +10,9 @@ const PLATFORM_CONFIG_MAP = {
 };
 
 const PLATFORM_PKG_MAP = {
-  win32: '@myscope/java-ls-config-win32',
-  linux: '@myscope/java-ls-config-linux',
-  darwin: '@myscope/java-ls-config-darwin',
+  win32: '@msinternal/java-ls-config-win32',
+  linux: '@msinternal/java-ls-config-linux',
+  darwin: '@msinternal/java-ls-config-darwin',
 };
 
 /**
@@ -26,7 +26,7 @@ function findJava(config) {
   const javaExeName = process.platform === 'win32' ? 'java.exe' : 'java';
 
   // 1. Check bundled JRE package
-  const jrePkg = `@myscope/java-ls-jre-${process.platform}-${process.arch}`;
+  const jrePkg = `@msinternal/java-ls-jre-${process.platform}-${process.arch}`;
   try {
     const jrePkgDir = path.dirname(require.resolve(`${jrePkg}/package.json`));
     const bundledJava = path.join(jrePkgDir, 'jre', 'bin', javaExeName);

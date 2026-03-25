@@ -1,11 +1,11 @@
 # Bundled JRE: macOS ARM64
 
-Optional Java 21 runtime for `@myscope/java-language-server`.
+Optional Java 21 runtime for `@msinternal/java-language-server`.
 
 Install this package to avoid requiring a separate Java installation:
 
 ```bash
-npm install @myscope/java-ls-jre-darwin-arm64
+npm install @msinternal/java-ls-jre-darwin-arm64
 ```
 
 ## Contents

@@ -14,7 +14,9 @@ packages/java-ls-config-darwin/config_mac/
 # Bundled JRE binaries
 packages/java-ls-jre-win32-x64/jre/
 packages/java-ls-jre-linux-x64/jre/
+packages/java-ls-jre-linux-arm64/jre/
 packages/java-ls-jre-darwin-arm64/jre/
+packages/java-ls-jre-darwin-x64/jre/
 
 # Temp download directory
 .tmp/

@@ -8,5 +8,5 @@ This package contains the platform-specific Eclipse Equinox launcher configurati
 
 ## Note
 
-This package is an `optionalDependency` of `@myscope/java-language-server`.
+This package is an `optionalDependency` of `@msinternal/java-language-server`.
 It is automatically skipped on non-Linux platforms via the `"os": ["linux"]` field in `package.json`.

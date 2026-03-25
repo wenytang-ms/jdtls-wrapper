@@ -1,11 +1,14 @@
 {
-  "name": "@myscope/java-ls-config-win32",
+  "name": "@msinternal/java-ls-config-win32",
   "version": "0.1.0",
-  "description": "Platform configuration for @myscope/java-language-server (Windows)",
+  "description": "Platform configuration for @msinternal/java-language-server (Windows)",
   "license": "EPL-2.0",
   "os": ["win32"],
   "files": [
     "config_win",
     "README.md"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }

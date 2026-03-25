@@ -1,11 +1,14 @@
 {
-  "name": "@myscope/java-ls-config-linux",
+  "name": "@msinternal/java-ls-config-linux",
   "version": "0.1.0",
-  "description": "Platform configuration for @myscope/java-language-server (Linux)",
+  "description": "Platform configuration for @msinternal/java-language-server (Linux)",
   "license": "EPL-2.0",
   "os": ["linux"],
   "files": [
     "config_linux",
     "README.md"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }
