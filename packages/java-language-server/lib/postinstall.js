@@ -79,7 +79,7 @@ function registerWithCopilotCli() {
 }
 
 function main() {
-  console.log('@msinternal/java-language-server - Post-install verification\n');
+  console.log('@vscjava/java-language-server - Post-install verification\n');
 
   let hasErrors = false;
 

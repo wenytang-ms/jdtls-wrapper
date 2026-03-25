@@ -1,6 +1,6 @@
 # Java Language Server — npm Distribution
 
-Distributes [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclipse.jdt.ls) via npm for integration with GitHub Copilot CLI, following the same architecture as `@msinternal/cpp-language-server`.
+Distributes [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclipse.jdt.ls) via npm for integration with GitHub Copilot CLI, following the same architecture as `@vscjava/cpp-language-server`.
 
 ## Current Status
 
@@ -17,7 +17,7 @@ Distributes [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclip
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  @msinternal/java-language-server          (main package)           │
+│  @vscjava/java-language-server          (main package)           │
 │  ├── bin/jdtls.js          Entry point: find JVM → spawn jdtls  │
 │  ├── lib/install.js        Platform detection, JVM resolution   │
 │  ├── lib/detect.js         Maven / Gradle project detection     │
@@ -84,16 +84,16 @@ javalsp/
 
 ## Copilot CLI Plugin Integration
 
-This project follows the same plugin architecture as `@msinternal/cpp-language-server`.
+This project follows the same plugin architecture as `@vscjava/cpp-language-server`.
 
 ### How it works
 
 ```
 npm registry                          Copilot CLI
 ┌─────────────────────┐    npx      ┌────────────────────────────┐
-│ @msinternal/            │◄──────────│ plugin/lsp.json             │
+│ @vscjava/            │◄──────────│ plugin/lsp.json             │
 │  java-language-server│            │  "command": "npx",          │
-│  java-ls-config-*    │            │  "args": ["@msinternal/..."]   │
+│  java-ls-config-*    │            │  "args": ["@vscjava/..."]   │
 │  java-ls-jre-*       │            └──────────┬─────────────────┘
 └─────────────────────┘                        │ loaded via
                                     ┌──────────┴─────────────────┐
@@ -167,9 +167,9 @@ Copilot CLI encounters .java file
   │
   ├─ Reads ~/.copilot/installed-plugins/local/java-language-server/
   │   └─ .claude-plugin/plugin.json → "lspServers": "lsp.json"
-  │       └─ lsp.json → { "command": "npx", "args": ["@msinternal/java-language-server", "--stdio"] }
+  │       └─ lsp.json → { "command": "npx", "args": ["@vscjava/java-language-server", "--stdio"] }
   │
-  ├─ Executes: npx @msinternal/java-language-server --stdio
+  ├─ Executes: npx @vscjava/java-language-server --stdio
   │
   ├─ bin/jdtls.js
   │   ├─ loadConfig()         Read java-lsp.json if present (optional, walk up from cwd)

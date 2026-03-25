@@ -1,22 +1,22 @@
-# @msinternal/java-language-server
+# @vscjava/java-language-server
 
 Java Language Server (Eclipse JDT LS wrapper) distributed via npm, designed for integration with GitHub Copilot CLI.
 
 ## Overview
 
-This package wraps [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclipse.jdt.ls) and distributes it via npm following the same platform-specific pattern used by `@msinternal/cpp-language-server`.
+This package wraps [Eclipse JDT Language Server](https://github.com/eclipse-jdtls/eclipse.jdt.ls) and distributes it via npm following the same platform-specific pattern used by `@vscjava/cpp-language-server`.
 
 ## Installation
 
 ```bash
-npm install -g @msinternal/java-language-server
+npm install -g @vscjava/java-language-server
 ```
 
 The installation automatically downloads the correct platform configuration for your OS.
 To bundle a JRE (no separate Java install needed):
 
 ```bash
-npm install -g @msinternal/java-language-server @msinternal/java-ls-jre-win32-x64
+npm install -g @vscjava/java-language-server @vscjava/java-ls-jre-win32-x64
 ```
 
 ## Prerequisites
@@ -70,7 +70,7 @@ Create `java-lsp.json` in your project root:
 
 ## Java Runtime Resolution Order
 
-1. Bundled JRE (optional `@msinternal/java-ls-jre-*` package)
+1. Bundled JRE (optional `@vscjava/java-ls-jre-*` package)
 2. `java.home` in `java-lsp.json`
 3. `JAVA_HOME` environment variable
 4. `java` on system PATH
@@ -78,14 +78,14 @@ Create `java-lsp.json` in your project root:
 ## Architecture
 
 ```
-@msinternal/java-language-server          (main package - Node.js shell + shared JARs)
+@vscjava/java-language-server          (main package - Node.js shell + shared JARs)
 ├── bin/jdtls.js                       (entry point)
 ├── lib/install.js                     (platform detection, JVM resolution)
 ├── lib/detect.js                      (Maven/Gradle project detection)
 ├── server/plugins/                    (Eclipse JDT LS jars - cross-platform)
 └── optionalDependencies:
-    ├── @msinternal/java-ls-config-*      (platform-specific launcher config)
-    └── @msinternal/java-ls-jre-*         (optional bundled JRE)
+    ├── @vscjava/java-ls-config-*      (platform-specific launcher config)
+    └── @vscjava/java-ls-jre-*         (optional bundled JRE)
 ```
 
 ## Server Files
@@ -94,7 +94,7 @@ After installing, place the jdtls server files in `server/`:
 
 ```bash
 # Download jdtls
-curl -L https://download.eclipse.org/jdtls/milestones/1.40.0/jdt-language-server-1.40.0-202410311350.tar.gz | tar xz -C node_modules/@msinternal/java-language-server/server/
+curl -L https://download.eclipse.org/jdtls/milestones/1.40.0/jdt-language-server-1.40.0-202410311350.tar.gz | tar xz -C node_modules/@vscjava/java-language-server/server/
 ```
 
 ## License

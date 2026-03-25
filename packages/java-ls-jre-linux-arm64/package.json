@@ -1,7 +1,7 @@
 {
-  "name": "@msinternal/java-ls-jre-linux-arm64",
+  "name": "@vscjava/java-ls-jre-linux-arm64",
   "version": "0.1.0",
-  "description": "Bundled Java 21 JRE for @msinternal/java-language-server (Linux ARM64)",
+  "description": "Bundled Java 21 JRE for @vscjava/java-language-server (Linux ARM64)",
   "license": "GPL-2.0-with-classpath-exception",
   "os": ["linux"],
   "cpu": ["arm64"],

@@ -1,7 +1,7 @@
 {
-  "name": "@msinternal/java-ls-jre-darwin-x64",
+  "name": "@vscjava/java-ls-jre-darwin-x64",
   "version": "0.1.0",
-  "description": "Bundled Java 21 JRE for @msinternal/java-language-server (macOS x64)",
+  "description": "Bundled Java 21 JRE for @vscjava/java-language-server (macOS x64)",
   "license": "GPL-2.0-with-classpath-exception",
   "os": ["darwin"],
   "cpu": ["x64"],

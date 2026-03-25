@@ -1,7 +1,7 @@
 {
-  "name": "@msinternal/java-ls-config-darwin",
+  "name": "@vscjava/java-ls-config-darwin",
   "version": "0.1.0",
-  "description": "Platform configuration for @msinternal/java-language-server (macOS)",
+  "description": "Platform configuration for @vscjava/java-language-server (macOS)",
   "license": "EPL-2.0",
   "os": ["darwin"],
   "files": [

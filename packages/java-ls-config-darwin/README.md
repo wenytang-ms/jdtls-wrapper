@@ -8,5 +8,5 @@ This package contains the platform-specific Eclipse Equinox launcher configurati
 
 ## Note
 
-This package is an `optionalDependency` of `@msinternal/java-language-server`.
+This package is an `optionalDependency` of `@vscjava/java-language-server`.
 It is automatically skipped on non-macOS platforms via the `"os": ["darwin"]` field in `package.json`.

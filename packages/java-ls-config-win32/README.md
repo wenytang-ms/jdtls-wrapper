@@ -8,7 +8,7 @@ This package contains the platform-specific Eclipse Equinox launcher configurati
 
 ## Note
 
-This package is an `optionalDependency` of `@msinternal/java-language-server`. 
+This package is an `optionalDependency` of `@vscjava/java-language-server`. 
 It is automatically skipped on non-Windows platforms via the `"os": ["win32"]` field in `package.json`.
 
 ## Populating config_win/

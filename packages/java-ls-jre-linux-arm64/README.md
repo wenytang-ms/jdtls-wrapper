@@ -1,11 +1,11 @@
 # Bundled JRE: Linux ARM64
 
-Optional Java 21 runtime for `@msinternal/java-language-server`.
+Optional Java 21 runtime for `@vscjava/java-language-server`.
 
 Install this package to avoid requiring a separate Java installation:
 
 ```bash
-npm install @msinternal/java-ls-jre-linux-arm64
+npm install @vscjava/java-ls-jre-linux-arm64
 ```
 
 ## Contents

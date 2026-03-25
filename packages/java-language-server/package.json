@@ -1,5 +1,5 @@
 {
-  "name": "@msinternal/java-language-server",
+  "name": "@vscjava/java-language-server",
   "version": "0.1.0",
   "description": "Java Language Server (Eclipse JDT LS) for Copilot CLI",
   "license": "EPL-2.0",
@@ -21,14 +21,14 @@
     "postinstall": "node lib/postinstall.js"
   },
   "optionalDependencies": {
-    "@msinternal/java-ls-config-win32": "0.1.0",
-    "@msinternal/java-ls-config-linux": "0.1.0",
-    "@msinternal/java-ls-config-darwin": "0.1.0",
-    "@msinternal/java-ls-jre-win32-x64": "0.1.0",
-    "@msinternal/java-ls-jre-linux-x64": "0.1.0",
-    "@msinternal/java-ls-jre-linux-arm64": "0.1.0",
-    "@msinternal/java-ls-jre-darwin-arm64": "0.1.0",
-    "@msinternal/java-ls-jre-darwin-x64": "0.1.0"
+    "@vscjava/java-ls-config-win32": "0.1.0",
+    "@vscjava/java-ls-config-linux": "0.1.0",
+    "@vscjava/java-ls-config-darwin": "0.1.0",
+    "@vscjava/java-ls-jre-win32-x64": "0.1.0",
+    "@vscjava/java-ls-jre-linux-x64": "0.1.0",
+    "@vscjava/java-ls-jre-linux-arm64": "0.1.0",
+    "@vscjava/java-ls-jre-darwin-arm64": "0.1.0",
+    "@vscjava/java-ls-jre-darwin-x64": "0.1.0"
   },
   "engines": {
     "node": ">=16.0.0"
