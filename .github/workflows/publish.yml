@@ -27,7 +27,10 @@ jobs:
       - name: Configure npm auth
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PATH_TOKEN }}" >> .npmrc
-          cat .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PATH_TOKEN }}" >> ~/.npmrc
+
+      - name: Verify npm auth
+        run: npm whoami --registry https://registry.npmjs.org/
 
       - name: Update version (if specified)
         if: ${{ inputs.version != '' }}
