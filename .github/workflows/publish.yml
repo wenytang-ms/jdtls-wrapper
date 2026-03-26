@@ -24,6 +24,11 @@ jobs:
       - name: Download JDTLS
         run: node scripts/download-jdtls.js
 
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PATH_TOKEN }}
+
       - name: Update version (if specified)
         if: ${{ inputs.version != '' }}
         run: |
