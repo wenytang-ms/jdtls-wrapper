@@ -277,6 +277,21 @@ function main() {
   // Handle parent process signals
   process.on('SIGTERM', () => child.kill('SIGTERM'));
   process.on('SIGINT', () => child.kill('SIGINT'));
+
+  // When stdin closes (Copilot CLI exits / LSP transport closed), kill Java process.
+  // This is the primary exit mechanism on Windows where SIGTERM/SIGINT don't work.
+  process.stdin.on('end', () => {
+    child.kill();
+  });
+
+  // Ensure Java process is cleaned up when Node exits for any reason
+  process.on('exit', () => {
+    try {
+      child.kill();
+    } catch {
+      // Child may already be dead
+    }
+  });
 }
 
 main();
