@@ -92,6 +92,9 @@ function extractTarGz(archive, destDir) {
 function distributeFiles(extractDir) {
   console.log('\nDistributing files to packages...');
 
+  // Ensure server directory exists
+  fs.mkdirSync(SERVER_DIR, { recursive: true });
+
   // Move plugins/ and features/ to main server dir
   const dirs = ['plugins', 'features'];
   for (const dir of dirs) {
