@@ -1,6 +1,6 @@
 {
   "name": "@vscjava/java-language-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Java Language Server (Eclipse JDT LS) for Copilot CLI",
   "license": "EPL-2.0",
   "repository": {

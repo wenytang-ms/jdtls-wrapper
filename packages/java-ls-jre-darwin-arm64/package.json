@@ -1,6 +1,6 @@
 {
   "name": "@vscjava/java-ls-jre-darwin-arm64",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Bundled Java 21 JRE for @vscjava/java-language-server (macOS ARM64)",
   "license": "GPL-2.0-with-classpath-exception",
   "os": ["darwin"],
