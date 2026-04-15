@@ -93,6 +93,8 @@ function detectGradleSettings(projectRoot) {
     hasWrapper: false,
     isKotlinDsl: false,
     isMultiProject: false,
+    gradleVersion: null,
+    recommendedJdk: null,
   };
 
   // Check for Gradle wrapper
@@ -108,6 +110,26 @@ function detectGradleSettings(projectRoot) {
   try {
     const content = fs.readFileSync(path.join(projectRoot, settingsFile), 'utf8');
     settings.isMultiProject = /include\s*[("']/.test(content);
+  } catch {
+    // Ignore read errors
+  }
+
+  // Detect Gradle version from wrapper properties
+  const propsPath = path.join(projectRoot, 'gradle', 'wrapper', 'gradle-wrapper.properties');
+  try {
+    const props = fs.readFileSync(propsPath, 'utf8');
+    const versionMatch = props.match(/gradle-(\d+\.\d+(?:\.\d+)?)/);
+    if (versionMatch) {
+      settings.gradleVersion = versionMatch[1];
+      const major = parseInt(versionMatch[1].split('.')[0], 10);
+      // Gradle 7.x supports up to Java 18; Gradle 8.5+ supports Java 21
+      if (major < 8) {
+        settings.recommendedJdk = '17';
+      } else {
+        const minor = parseInt(versionMatch[1].split('.')[1] || '0', 10);
+        settings.recommendedJdk = (major === 8 && minor < 5) ? '17' : '21';
+      }
+    }
   } catch {
     // Ignore read errors
   }

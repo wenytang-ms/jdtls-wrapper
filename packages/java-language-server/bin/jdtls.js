@@ -28,7 +28,7 @@ function loadConfig() {
   return {};
 }
 
-function buildArgs(config) {
+function buildArgs(config, projectInfo) {
   const javaExe = findJava(config);
   if (!javaExe) {
     console.error('ERROR: Java 21+ runtime not found.');
@@ -52,7 +52,12 @@ function buildArgs(config) {
   }
 
   const workspaceDir = getWorkspaceDir(config);
-  const vmargs = (config.java && config.java.vmargs) || ['-Xmx1G'];
+
+  // Dynamic heap size: 2G for multi-module projects, 1G otherwise
+  const isLargeProject = projectInfo &&
+    (projectInfo.settings.isMultiModule || projectInfo.settings.isMultiProject);
+  const defaultHeap = isLargeProject ? '-Xmx2G' : '-Xmx1G';
+  const vmargs = (config.java && config.java.vmargs) || [defaultHeap];
 
   const args = [
     ...vmargs,
@@ -160,17 +165,143 @@ function fixInitializeRequest(text) {
  * Lightweight LSP proxy that:
  * 1. Fixes malformed file:// URIs in initialize requests
  * 2. Automatically sends 'initialized' notification to jdtls
+ * 3. Buffers client requests until project import is complete (project-ready gate)
  */
 function createLspProxy(child) {
   let sentInitialized = false;
   let clientBuffer = '';
   let buffering = true;
 
+  // Project readiness tracking
+  let projectReady = false;
+  let pendingRequests = [];
+  let serverBuffer = '';
+  let initializeResponseSent = false;
+
+  /**
+   * Parse LSP messages from a raw byte stream.
+   * Returns { messages: [{header, body}], remainder: string }
+   */
+  function parseLspMessages(data) {
+    const messages = [];
+    let pos = 0;
+    while (pos < data.length) {
+      const headerEnd = data.indexOf('\r\n\r\n', pos);
+      if (headerEnd === -1) break;
+      const header = data.substring(pos, headerEnd);
+      const lengthMatch = header.match(/Content-Length:\s*(\d+)/i);
+      if (!lengthMatch) { pos = headerEnd + 4; continue; }
+      const contentLength = parseInt(lengthMatch[1], 10);
+      const bodyStart = headerEnd + 4;
+      if (data.length < bodyStart + contentLength) break; // incomplete
+      const body = data.substring(bodyStart, bodyStart + contentLength);
+      messages.push({ header, body, raw: data.substring(pos, bodyStart + contentLength) });
+      pos = bodyStart + contentLength;
+    }
+    return { messages, remainder: data.substring(pos) };
+  }
+
+  /**
+   * Check server stderr/progress messages to detect when project import is done.
+   * jdtls emits these patterns on stderr:
+   *   ">> initialization job finished"
+   *   ">> build jobs finished"
+   */
+  let importStarted = false;
+  let buildFinishedCount = 0;
+
+  child.stderr.on('data', (chunk) => {
+    const text = chunk.toString('utf8');
+    process.stderr.write(chunk); // always forward stderr
+
+    if (text.includes('Importing') || text.includes('Synchronizing projects')) {
+      importStarted = true;
+    }
+
+    if (text.includes('>> initialization job finished') || text.includes('>> build jobs finished')) {
+      buildFinishedCount++;
+    }
+
+    // Project is ready after import started and build finished,
+    // or after the initialization job finished
+    if (!projectReady && importStarted && buildFinishedCount >= 1) {
+      projectReady = true;
+      console.error(`[jdtls-proxy] Project import complete — flushing ${pendingRequests.length} buffered request(s)`);
+      flushPendingRequests();
+    }
+  });
+
+  // Timeout: if project doesn't become ready within 5 minutes, flush anyway
+  const readyTimeout = setTimeout(() => {
+    if (!projectReady) {
+      projectReady = true;
+      console.error(`[jdtls-proxy] Project ready timeout (300s) — flushing ${pendingRequests.length} buffered request(s)`);
+      flushPendingRequests();
+    }
+  }, 300000);
+
+  function flushPendingRequests() {
+    clearTimeout(readyTimeout);
+    for (const req of pendingRequests) {
+      child.stdin.write(req);
+    }
+    pendingRequests = [];
+  }
+
+  /**
+   * Intercept client→server messages after init handshake.
+   * Buffer workspace/symbol, textDocument/* requests until project is ready.
+   * Let $/cancelRequest and other control messages through immediately.
+   */
+  function handleClientMessage(data) {
+    if (projectReady) {
+      child.stdin.write(data);
+      return;
+    }
+
+    // Parse to check if this is a request that needs project index
+    const { messages, remainder } = parseLspMessages(data);
+    if (messages.length === 0) {
+      // Incomplete message, buffer it
+      pendingRequests.push(data);
+      return;
+    }
+
+    for (const msg of messages) {
+      try {
+        const parsed = JSON.parse(msg.body);
+        const method = parsed.method || '';
+
+        // Let control messages through immediately
+        if (method.startsWith('$/') || method === 'shutdown' || method === 'exit') {
+          child.stdin.write(msg.raw);
+          continue;
+        }
+
+        // Buffer requests that need project index
+        if (!projectReady) {
+          console.error(`[jdtls-proxy] Buffering request: ${method} (waiting for project ready)`);
+          pendingRequests.push(msg.raw);
+          continue;
+        }
+
+        child.stdin.write(msg.raw);
+      } catch {
+        // Can't parse, forward as-is
+        child.stdin.write(msg.raw);
+      }
+    }
+
+    if (remainder) {
+      pendingRequests.push(remainder);
+    }
+  }
+
   // Client → Server: intercept initialize request to fix URIs
   process.stdin.on('data', (chunk) => {
     if (!buffering) {
-      // After init handshake, direct passthrough
-      child.stdin.write(chunk);
+      // After init handshake, go through project-ready gate
+      handleClientMessage(chunk.toString('utf8'));
       return;
     }
 
@@ -194,9 +325,9 @@ function createLspProxy(child) {
             const fixed = fixInitializeRequest(fullMessage);
             child.stdin.write(fixed);
 
-            // Forward any remaining data
+            // Forward any remaining data through the gate
             if (remaining.length > 0) {
-              child.stdin.write(remaining);
+              handleClientMessage(remaining);
             }
 
             buffering = false;
@@ -210,9 +341,6 @@ function createLspProxy(child) {
               child.stdin.write(initialized);
             }, 3000);
 
-            // Switch to direct piping
-            process.stdin.removeAllListeners('data');
-            process.stdin.pipe(child.stdin);
             return;
           }
         }
@@ -229,11 +357,8 @@ function createLspProxy(child) {
     }
   });
 
-  // Server → Client: direct passthrough (no interception needed)
+  // Server → Client: direct passthrough
   child.stdout.pipe(process.stdout);
-
-  // Forward server stderr to our stderr
-  child.stderr.pipe(process.stderr);
 }
 
 function main() {
@@ -242,9 +367,15 @@ function main() {
   const projectInfo = detectProject(config.repositoryPath || process.cwd());
   if (projectInfo.type !== 'unknown') {
     console.error(`Detected ${projectInfo.type} project: ${projectInfo.buildFile}`);
+    if (projectInfo.settings.gradleVersion) {
+      console.error(`Gradle version: ${projectInfo.settings.gradleVersion} (recommended JDK: ${projectInfo.settings.recommendedJdk})`);
+    }
+    if (projectInfo.settings.isMultiModule || projectInfo.settings.isMultiProject) {
+      console.error(`Multi-module project detected — using increased heap (-Xmx2G)`);
+    }
   }
 
-  const { javaExe, args } = buildArgs(config);
+  const { javaExe, args } = buildArgs(config, projectInfo);
 
   console.error(`Starting jdtls with: ${javaExe}`);
 
